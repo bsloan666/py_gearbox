@@ -244,7 +244,6 @@ def run():
             args.axle_radius,
             args.pitch,
             args.depth,
-            args.twist,
             args.out_dir
         )
 

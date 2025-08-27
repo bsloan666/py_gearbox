@@ -3,6 +3,13 @@ import transform as xfm
 import primitive as prim
 
 
+def simple_spur(radius, axle_radius, depth):
+    points1, indices1 = mach.gear_wheel(radius, 3, depth)
+    points2, indices2 = prim.tube(axle_radius, radius - 1, depth, 64)
+    points1, indices1 = xfm.merge(points1, indices1, points2, indices2)
+
+    return points1, indices1
+
 def spur(radius, axle_radius, depth, twist):
     points1, indices1 = mach.twisted_spur(radius, 3, depth, twist, 0)
     points2, indices2 = prim.tube(axle_radius, radius - 1, depth, 64)
@@ -20,7 +27,7 @@ def bevel_spur(radius, axle_radius, depth, twist):
 
 def ring(radius, depth, twist):
     points1, indices1 = mach.twisted_internal(radius, 3, depth, twist) 
-    points2, indices2 = prim.tube(radius + 1, radius + 5, depth, 64)
+    points2, indices2 = prim.tube(radius + 1, radius + 2, depth, 64)
     points1, indices1 = xfm.merge(points1, indices1, points2, indices2)
 
     return points1, indices1
