@@ -7,15 +7,15 @@ import stlio
 import component as comp
 
 
-def planetary(sun_radius, ring_radius, planet_axle_radius, sun_axle_radius, depth, twist, out_dir):
+def planetary(sun_radius, ring_radius, planet_axle_radius, sun_axle_radius, depth, pitch, twist, out_dir):
     if not os.path.exists(out_dir):
         os.makedirs(out_dir)
 
-    sun_teeth = mach.gear_wheel(sun_radius, 3, 0)
+    sun_teeth = mach.gear_wheel(sun_radius, pitch, 0)
     planet_radius = (ring_radius - sun_radius)/2
-    planet_teeth = mach.gear_wheel(planet_radius, 3, 0)
+    planet_teeth = mach.gear_wheel(planet_radius, pitch, 0)
     
-    ring_teeth = mach.internal_gear(ring_radius, 3, 0)
+    ring_teeth = mach.internal_gear(ring_radius, pitch, 0)
     required_ring_teeth = planet_teeth * 2 + sun_teeth
 
     print("RING_TEETH:")
@@ -25,9 +25,9 @@ def planetary(sun_radius, ring_radius, planet_axle_radius, sun_axle_radius, dept
 
     print("GEAR_RATIO: {0}".format(sun_teeth/(ring_teeth + sun_teeth)))
     
-    points1, indices1 = comp.spur(sun_radius, sun_axle_radius, depth, -twist) 
-    points2, indices2 = comp.spur(planet_radius, planet_axle_radius, depth, twist)
-    points3, indices3 = comp.ring(ring_radius, depth, -twist)
+    points1, indices1 = comp.spur(sun_radius, sun_axle_radius, depth, pitch, -twist) 
+    points2, indices2 = comp.spur(planet_radius, planet_axle_radius, depth, pitch, twist)
+    points3, indices3 = comp.ring(ring_radius, depth, pitch, -twist)
 
     points1 = xfm.rotate(points1, 360/sun_teeth/-1.6, 2)
     stlio.save(os.path.join(out_dir, "sun.stl"), points1, indices1)

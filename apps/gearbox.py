@@ -199,6 +199,7 @@ def run():
             args.planet_axle_radius, 
             args.sun_axle_radius, 
             args.depth, 
+            args.pitch,
             args.twist, 
             args.out_dir
         )
@@ -221,7 +222,8 @@ def run():
             args.minor_radius, 
             args.axle_radius, 
             args.depth, 
-            args.flip, 
+            args.flip,
+            args.pitch,
             args.twist, 
             args.out_dir,
         )

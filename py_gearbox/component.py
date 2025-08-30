@@ -3,41 +3,41 @@ import transform as xfm
 import primitive as prim
 
 
-def simple_spur(radius, axle_radius, depth):
-    points1, indices1 = mach.gear_wheel(radius, 3, depth)
+def simple_spur(radius, axle_radius, depth, pitch):
+    points1, indices1 = mach.gear_wheel(radius, pitch, depth)
     points2, indices2 = prim.tube(axle_radius, radius - 1, depth, 64)
     points1, indices1 = xfm.merge(points1, indices1, points2, indices2)
 
     return points1, indices1
 
-def spur(radius, axle_radius, depth, twist):
-    points1, indices1 = mach.twisted_spur(radius, 3, depth, twist, 0)
-    points2, indices2 = prim.tube(axle_radius, radius - 1, depth, 64)
+def spur(radius, axle_radius, depth, pitch, twist):
+    points1, indices1 = mach.twisted_spur(radius, pitch, depth, twist, 0)
+    points2, indices2 = prim.tube(axle_radius, radius - pitch/3, depth, 64)
     points1, indices1 = xfm.merge(points1, indices1, points2, indices2)
 
     return points1, indices1
 
-def bevel_spur(radius, axle_radius, depth, twist):
-    points1, indices1 = mach.twisted_spur(radius, 6, depth, twist, (radius - depth)/radius)
+def bevel_spur(radius, axle_radius, depth, pitch, twist):
+    points1, indices1 = mach.twisted_spur(radius, pitch, depth, twist, (radius - depth)/radius)
     points2, indices2 = prim.conical_bushing(radius - 2, radius - (depth + 1.5), axle_radius, depth, 64)
     points1, indices1 = xfm.merge(points1, indices1, points2, indices2)
 
     return points1, indices1
 
 
-def ring(radius, depth, twist):
-    points1, indices1 = mach.twisted_internal(radius, 3, depth, twist) 
-    points2, indices2 = prim.tube(radius + 1, radius + 2, depth, 64)
+def ring(radius, depth, pitch, twist):
+    points1, indices1 = mach.twisted_internal(radius, pitch, depth, twist) 
+    points2, indices2 = prim.tube(radius + pitch/3, radius + 2, depth, 64)
     points1, indices1 = xfm.merge(points1, indices1, points2, indices2)
 
     return points1, indices1
 
 
-def reducer(ratio, minor_radius, axle_radius, depth, flip, twist):
+def reducer(ratio, minor_radius, axle_radius, depth, flip, pitch, twist):
 
-    points1, indices1 = spur(minor_radius, 3, depth, twist)
+    points1, indices1 = spur(minor_radius, pitch, depth, twist)
 
-    points2, indices2 = spur(minor_radius/ratio, 3, depth, twist=twist)
+    points2, indices2 = spur(minor_radius/ratio, pitch, depth, twist=twist)
 
     if flip:
         points2 = xfm.translate(points2, 0, 0, depth)
