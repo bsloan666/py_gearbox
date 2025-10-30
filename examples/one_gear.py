@@ -7,7 +7,7 @@ import sys
 
 if __name__ == "__main__":
 
-    points, indices = mach.rack(70, 3, 7)
-    stlio.save("/Users/bsloan/Desktop/rack.stl", points, indices)
+    points, indices = mach.gear_wheel(12, 3, 7)
+    stlio.save("/Users/bsloan/Desktop/rack_gear.stl", points, indices)
 
 

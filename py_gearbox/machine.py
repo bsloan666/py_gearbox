@@ -3,6 +3,28 @@ import primitive as prim
 import transform as xfm
 
 
+def rack(length, pitch, depth):
+    """
+    A toothed linear component  
+    Pitch determines compatibility with other gears
+    """
+    points = []
+    indices = []
+    num_teeth = int(length / pitch)
+
+    if depth == 0:
+        return num_teeth
+
+    for tooth in range(num_teeth):
+        new_points, new_indices = prim.gear_tooth(pitch, depth)
+        points = xfm.translate(points, pitch, 0, 0)
+
+        points, indices = xfm.merge(
+            points, indices, new_points, new_indices)
+
+    return points, indices
+
+
 def pinion(radius, pitch, depth, arc_degrees):
     """
     A partial circumference spur gear 

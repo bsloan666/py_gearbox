@@ -107,7 +107,7 @@ def right_angle_transmission(radius, axle_radius_in, axle_radius_out, depth, twi
 def single_gear(radius, axle_radius, pitch, depth, out_dir):
     nteeth = mach.gear_wheel(radius, pitch, 0)
     print(f"Simple spur gear with {nteeth} teeth.")
-    points, indices = comp.simple_spur(radius, axle_radius, depth)
+    points, indices = comp.simple_spur(radius, axle_radius, depth, pitch)
     stlio.save(os.path.join(out_dir, "single_gear.stl"), points, indices)
 
     
