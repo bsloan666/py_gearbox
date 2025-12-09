@@ -141,12 +141,14 @@ def sinus_cog(radius, depth, grain, degrees_per_tooth, length):
     return points, indices
 
 
-def tube(radius1, radius2, depth, grain):
+def tube(radius1, radius2, depth, grain, arc_degrees=360):
     points = []
     indices = []
     angle = math.pi * 2 / grain
 
-    for index1 in range(grain + 1):
+    arc_steps = int(grain * arc_degrees/360)
+
+    for index1 in range(arc_steps + 1):
         angle1 = index1 * angle
         matrix = np.array(
             [
@@ -183,6 +185,16 @@ def tube(radius1, radius2, depth, grain):
                 (p8, p7, p3, p4),
                 (p5, p8, p4, p1)
             ])
+
+    # do we need end caps?
+    if arc_degrees < 360:
+        indices.append((1, 2, 3, 4))
+        p1 = len(points) - 3
+        p2 = p1 + 1
+        p3 = p1 + 2
+        p4 = p1 + 3
+        indices.append((p1, p2, p3, p4))
+        
 
     return points, indices
 

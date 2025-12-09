@@ -49,7 +49,7 @@ def planetary(sun_radius, ring_radius, planet_axle_radius, sun_axle_radius, dept
     stlio.save(os.path.join(out_dir, "planet_4.stl"), points2, indices2)
 
 
-def reducer_stack(ratio, repeats, minor_radius, axle_radius, depth, flip, twist, out_dir):
+def reducer_stack(ratio, repeats, minor_radius, axle_radius, depth, flip, pitch, twist, out_dir):
     if not os.path.exists(out_dir):
         os.makedirs(out_dir)
 
@@ -60,9 +60,9 @@ def reducer_stack(ratio, repeats, minor_radius, axle_radius, depth, flip, twist,
         if index % 2:
             sign = -1
         if index == repeats - 1:
-            points, indices = comp.spur(minor_radius/ratio, axle_radius, depth, twist*sign)
+            points, indices = comp.spur(minor_radius/ratio, axle_radius, depth, pitch, twist*sign)
         else:    
-            points, indices = comp.reducer(ratio, minor_radius, axle_radius, depth, flip, twist=twist*sign)
+            points, indices = comp.reducer(ratio, minor_radius, axle_radius, depth, flip, pitch, twist=twist*sign)
         points = xfm.translate(points, 0, 0, (index + 1) * depth)
         if not index:
             points = xfm.rotate(points, 7, 2)

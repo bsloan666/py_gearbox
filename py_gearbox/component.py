@@ -35,9 +35,9 @@ def ring(radius, depth, pitch, twist):
 
 def reducer(ratio, minor_radius, axle_radius, depth, flip, pitch, twist):
 
-    points1, indices1 = spur(minor_radius, pitch, depth, twist)
+    points1, indices1 = spur(minor_radius, axle_radius,  depth, pitch, twist)
 
-    points2, indices2 = spur(minor_radius/ratio, pitch, depth, twist=twist)
+    points2, indices2 = spur(minor_radius/ratio, axle_radius, depth, pitch, twist=twist)
 
     if flip:
         points2 = xfm.translate(points2, 0, 0, depth)
