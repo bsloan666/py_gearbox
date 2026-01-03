@@ -144,9 +144,9 @@ def sinus_cog(radius, depth, grain, degrees_per_tooth, length):
 def tube(radius1, radius2, depth, grain, arc_degrees=360):
     points = []
     indices = []
-    angle = math.pi * 2 / grain
 
     arc_steps = int(grain * arc_degrees/360)
+    angle = math.pi * 2 / grain 
 
     for index1 in range(arc_steps + 1):
         angle1 = index1 * angle
