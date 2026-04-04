@@ -51,6 +51,19 @@ def run():
     column_count = 0
     row = "  "
 
+    for x in mapping:
+        row  += f"{x:4},"
+        column_count += 1
+        if column_count > 7:
+            print(row)
+            row = "  "
+            column_count = 0
+
+    print(row)
+
+    print("};")
+    # Print inverse mapping of GC to int
+    """
     for x in inv_map:
         row  += f"{x:4},"
         column_count += 1
@@ -59,21 +72,20 @@ def run():
             row = "  "
             column_count = 0
 
-
     print(row)
 
     print("};")
+    """
 
-
-    INNER_DIA = 18
-    RING_WIDTH = 4
+    INNER_RAD = 20
+    RING_WIDTH = 3
     SUPPORT_WIDTH = 1
     
-    points, indices = prim.tube(INNER_DIA - SUPPORT_WIDTH * 3, INNER_DIA, 2, 256, 360)
+    points, indices = prim.tube(INNER_RAD - SUPPORT_WIDTH * 3, INNER_RAD, 2, 256, 360)
 
     # make retainer rings
     for index in range(8):
-        inner = INNER_DIA + index * RING_WIDTH 
+        inner = INNER_RAD + index * RING_WIDTH 
         points1, indices1 = prim.tube(inner+(RING_WIDTH-SUPPORT_WIDTH), inner + RING_WIDTH, 2, 256, 360)
         points, indices = xfm.merge(
            points, indices, points1, indices1)
@@ -81,12 +93,11 @@ def run():
     steps = pow(2, 8)
     degrees = 360/256 
 
-    sections = [[],[],[],[],[],[],[],[]]
-
     for step in range(steps):
         for index in range(8):
-            degree_offset = index * 10
-            inner = INNER_DIA + (7 - index) * RING_WIDTH 
+            # 10 degree rotational offset
+            degree_offset = (7 - index) * 10 + 45
+            inner = INNER_RAD + (7 - index) * RING_WIDTH 
             if ((mapping[step] >> index) & 1) == 0:
                 
                 points1, indices1 = prim.tube(inner, inner+(RING_WIDTH-SUPPORT_WIDTH), 2, 512, degrees)

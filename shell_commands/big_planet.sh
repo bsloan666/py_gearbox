@@ -1,0 +1,1 @@
+PYTHONPATH=./py_gearbox python apps/gearbox.py --depth 5 --directory ../../baked_geo/3phase_planets --pitch 3.0 planetary --sun-radius 6.0 --ring-radius 52.0 --planet-axle-radius 12.1 --sun-axle-radius 4
